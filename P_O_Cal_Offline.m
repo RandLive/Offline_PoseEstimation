@@ -7,16 +7,17 @@ global Anz_Punkte Anz_Spulen ...
 
 cd DataSave
 % % % -80dBW
-% load Um_Noise_80dBW
-% load POR_80dBW
-% Um=Um_Noise_80dBW;
-% POR=POR_80dBW;
+load Um_Noise_80dBW
+load POR_80dBW
+Um=Um_Noise_80dBW;
+POR=POR_80dBW;
 
 % % -40dBW
-load Um_Noise_40dBW
-load POR_40dBW
-Um=Um_Noise_40dBW;
-POR=POR_40dBW;
+% load Um_Noise_40dBW
+% load POR_40dBW
+% Um=Um_Noise_40dBW;
+% POR=POR_40dBW;
+
 cd ..
 
 StartX = 0.1;
