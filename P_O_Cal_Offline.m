@@ -85,7 +85,6 @@ for i=1:length_U
     
     switch mode
         case 1
-            U=Um(i,:);
             StartX = 0.1;
             StartY = 0.1;
             StartZ = 0.1;
