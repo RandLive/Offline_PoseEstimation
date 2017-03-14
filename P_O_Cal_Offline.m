@@ -71,43 +71,79 @@ mode = input(' 1-no update \n 2-update with previous value \n 3-update with filt
 
 for i=1:length_U
     
-    U=Um(i,:);
-    [x,y,z,phi,theta]=POS_(U,StartX,StartY,StartZ,StartPhi,StartTheta);
-    POM(i,:)=[x,y,z,phi,theta];
-    disp(i);
-    pause(0);
-    
-    if i>=15
-        POM_KF(i,:) = fun_KF_CV(POM(i-14:i,:))';
-    else
-        POM_KF(i,:) = POM(i,:);
-    end
-    
     switch mode
-        case 1
-            StartX = 0.1;
-            StartY = 0.1;
+        case 1 % No Update
+            StartX = 0;
+            StartY = 0;
             StartZ = 0.1;
-            StartPhi = 0;
-            StartTheta = 0;
-        case 2
+            StartPhi = 45;
+            StartTheta = 45;
+            U=Um(i,:);
+            [x,y,z,phi,theta]=POS(U,StartX,StartY,StartZ,StartPhi,StartTheta);
+            POM(i,:)=[x,y,z,phi,theta];
+            disp(i);
+            pause(0);
+            if i>=15
+                POM_KF(i,:) = fun_KF_CV(POM(i-14:i,:))';
+            else
+                POM_KF(i,:) = POM(i,:);
+            end
+            
+        case 2 % Update with last Value
+            [x,y,z,phi,theta]=POS(U,StartX,StartY,StartZ,StartPhi,StartTheta);
+            POM(i,:)=[x,y,z,phi,theta];
+            disp(i);
+            pause(0);
             StartX = x;
             StartY = y;
             StartZ = z;
             StartPhi = phi;
             StartTheta = theta;
-        case 3
+            U=Um(i,:);
+            if i>=15
+                POM_KF(i,:) = fun_KF_CV(POM(i-14:i,:))';
+            else
+                POM_KF(i,:) = POM(i,:);
+            end
+         
+        case 3 % Update with filtered Value
+            U=Um(i,:);
+            [x,y,z,phi,theta]=POS(U,StartX,StartY,StartZ,StartPhi,StartTheta);
+            POM(i,:)=[x,y,z,phi,theta];
+            if i>=15
+                POM_KF(i,:) = fun_KF_CV(POM(i-14:i,:))';
+            else
+                POM_KF(i,:) = POM(i,:);
+            end
+            disp(i);
+            pause(0);
             StartX = POM_KF(i,1);
             StartY = POM_KF(i,2);
             StartZ = POM_KF(i,3);
             StartPhi = POM_KF(i,4);
             StartTheta = POM_KF(i,5);
-        case 4
+            if i>=15
+                POM_KF(i,:) = fun_KF_CV(POM(i-14:i,:))';
+            else
+                POM_KF(i,:) = POM(i,:);
+            end
+            
+        case 4 % Update with Real Value
             StartX = POR(i,1);
             StartY = POR(i,2);
             StartZ = POR(i,3);
             StartPhi = POR(i,4);
             StartTheta = POR(i,5);
+            U=Um(i,:);
+            [x,y,z,phi,theta]=POS(U,StartX,StartY,StartZ,StartPhi,StartTheta);
+            POM(i,:)=[x,y,z,phi,theta];
+            disp(i);
+            pause(0);
+            if i>=15
+                POM_KF(i,:) = fun_KF_CV(POM(i-14:i,:))';
+            else
+                POM_KF(i,:) = POM(i,:);
+            end
     end
     
 end
