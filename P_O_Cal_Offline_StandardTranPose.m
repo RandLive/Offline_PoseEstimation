@@ -1,4 +1,4 @@
-clear;close;clc;
+clear;clc;
 
 global Anz_Punkte Anz_Spulen ...
     m C r funktionscount zeit U  ...
@@ -153,6 +153,12 @@ POM_KF = zeros(length_U,5);
 
 mode = input(' 1-no update \n 2-update with previous value \n 3-update with filtered value \n 4-update with ground truth \n Enter the working mode:');
 
+StartX = 0;
+StartY = 0;
+StartZ = 0.1;
+StartPhi = 45;
+StartTheta = 45;
+
 for i=1:length_U
     
     switch mode
@@ -160,8 +166,8 @@ for i=1:length_U
             StartX = 0;
             StartY = 0;
             StartZ = 0.1;
-            StartPhi = -180;
-            StartTheta = -180;
+            StartPhi = 0;
+            StartTheta = 0;
             U=U1(i,:);
             [x,y,z,phi,theta]=POS(U,StartX,StartY,StartZ,StartPhi,StartTheta);
             POM(i,:)=[x,y,z,phi,theta];
@@ -188,7 +194,7 @@ for i=1:length_U
             else
                 POM_KF(i,:) = POM(i,:);
             end
-         
+            
         case 3
             U=U1(i,:);
             [x,y,z,phi,theta]=POS(U,StartX,StartY,StartZ,StartPhi,StartTheta);
@@ -231,28 +237,9 @@ for i=1:length_U
     
 end
 
-% POM = [1000*POM(:,1:3), POM(:,4:5)];
-% POM_KF = [1000*POM_KF(:,1:3), POM_KF(:,4:5)];
-% POR = [1000*POR(:,1:3), POR(:,4:5)];
+POM = [1000*POM(:,1:3), POM(:,4:5)];
+POM_KF = [1000*POM_KF(:,1:3), POM_KF(:,4:5)];
+POR = [1000*POR(:,1:3), POR(:,4:5)];
 
-
-scatter3(POM(:,1),POM(:,2),POM(:,3),'ro');hold on;scatter3(POM_KF(:,1),POM_KF(:,2),POM_KF(:,3),'b*');hold on;scatter3(POR(:,1),POR(:,2),POR(:,3),'g.');legend('Measued','Filtered','Truth');
-
-all_P_Error = POM(:,1:3)-POR(:,1:3);
-rms_P_Error = rms(sqrt(sum((all_P_Error).^2)));
-
-all_O_Error = POM(:,4:5)-POR(:,4:5);
-rms_O_Error = rms(abs(all_O_Error(:,1))+abs(all_O_Error(:,2)));
-
-all_P_Error_KF = POM_KF(:,1:3)-POR(:,1:3);
-rms_P_Error_KF = rms(sqrt(sum((all_P_Error_KF).^2)));
-
-all_O_Error_KF = POM_KF(:,4:5)-POR(:,4:5);
-rms_O_Error_KF = rms(abs(all_O_Error_KF(:,1))+abs(all_O_Error_KF(:,2)));
-
-fprintf('The Position RMSE is = %f mm \n',rms_P_Error);
-fprintf('The Orientation RMSE is = %f degree \n',rms_O_Error);
-fprintf('The Position RMSE (After KF) is = %f mm \n',rms_P_Error_KF);
-fprintf('The Orientation RMSE (After KF) is = %f degree \n',rms_O_Error_KF);
-
-
+scatter3(POM(:,1),POM(:,2),POM(:,3),'bo');hold on;scatter3(POR(:,1),POR(:,2),POR(:,3),'r.');legend('Estimated Pose','Ground Truth');axis([0 120 0 250 350 700]);
+set(get(gcf,'CurrentAxes'),'FontName','Times New Roman','FontSize',20);xlabel('X Position (mm)');ylabel('Y Position (mm)');zlabel('Z Position (mm)');

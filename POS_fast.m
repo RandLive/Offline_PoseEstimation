@@ -7,7 +7,7 @@ flag=0;
 koord_start0=[x_start y_start z_start phi_start theta_start];
 koord_start=koord_start0;
 
-options=optimset('Algorithm','trust-region-reflective','TolFun',1e-12,'MaxFunEvals',20000,'MaxIter',20000,'Display','off');   % Option to display output
+options=optimset('Algorithm','trust-region-reflective','TolFun',1e-7,'MaxFunEvals',20000,'MaxIter',20000,'Display','off');   % Option to display output
 % options=optimset('Algorithm','levenberg-marquardt','TolFun',1e-12,'MaxFunEvals',20000,'MaxIter',20000,'Display','off');   % Option to display output
 
 clk=clock;

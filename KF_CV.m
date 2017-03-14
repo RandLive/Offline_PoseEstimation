@@ -30,7 +30,7 @@ H=[eye(M/2),zeros(M/2)];                                                 % obsev
 %initialize the noise covariance matrix_state
 
 P=100*eye(M);                                                                   %state variance matrix_state/error covariance matrix_state
-Q=1e-6*[(deltaT^3)/3*eye(M/2),(deltaT^2)/2*eye(M/2);(deltaT^2)/2*eye(M/2),deltaT*eye(M/2)];     %Process covariance matrix_state
+Q=1e-12*[(deltaT^3)/3*eye(M/2),(deltaT^2)/2*eye(M/2);(deltaT^2)/2*eye(M/2),deltaT*eye(M/2)];     %Process covariance matrix_state
 % R=cov(datain(1:3,:)');                                                     %observation covariance matrix_state
 R=zeros(M/2);
 
