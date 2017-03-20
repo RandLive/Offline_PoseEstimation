@@ -7,21 +7,16 @@ global Anz_Punkte Anz_Spulen ...
 
 cd DataSave
 % % % -80dBW
-load Um_NoNoise
+load Um_No_Noise
 load POR
 
-SigLength = max(size(Um_NoNoise));
-SigNoiseLevel = -60; 
-
-
-Um = zeros(SigLength,8);
-
+SigLength = max(size(Um_No_Noise));
 
 for i=1:SigLength
-Um(i,:)=Um_NoNoise(i,:)+wgn(1,8,SigNoiseLevel);
-end
+Um=Um_Noise;
+e
 
-% POR=POR;
+POR=POR;
 
 % % -40dBW
 % load Um_Noise_40dBW
@@ -87,8 +82,8 @@ for i=1:length_U
             StartX = 0;
             StartY = 0;
             StartZ = 0.1;
-            StartPhi = 0;
-            StartTheta = 0;
+            StartPhi = 45;
+            StartTheta = 45;
             U=Um(i,:);
             [x,y,z,phi,theta]=POS(U,StartX,StartY,StartZ,StartPhi,StartTheta);
             POM(i,:)=[x,y,z,phi,theta];
