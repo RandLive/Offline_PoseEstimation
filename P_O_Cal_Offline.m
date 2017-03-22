@@ -7,20 +7,21 @@ global Anz_Punkte Anz_Spulen ...
 
 cd DataSave
 % % % -80dBW
-load Um_NoNoise
+load Um_Noise
 load POR
+% 
+% SigLength = max(size(Um_NoNoise));
+% SigNoiseLevel = -60; 
+% 
+% 
+% Um = zeros(SigLength,8);
+% 
+% 
+% for i=1:SigLength
+% Um(i,:)=Um_NoNoise(i,:)+wgn(1,8,SigNoiseLevel);
+% end
 
-SigLength = max(size(Um_NoNoise));
-SigNoiseLevel = -60; 
-
-
-Um = zeros(SigLength,8);
-
-
-for i=1:SigLength
-Um(i,:)=Um_NoNoise(i,:)+wgn(1,8,SigNoiseLevel);
-end
-
+Um = Um_Noise;
 % POR=POR;
 
 % % -40dBW
