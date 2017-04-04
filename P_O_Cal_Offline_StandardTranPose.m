@@ -46,6 +46,7 @@ N_empfang=500;                          % Windungszahl Empfangsspule (number of 
 R_sende=0.015;                           % Radius Sendespule (Radius of emitting coils)
 R_empfang=283.2*10^-6;                  % Radius Empfangsspule (Radius of sensing coils)
 I=0.6602;
+% I = 0.660156294774090;
 
 
 % Frequenz Sendespule (frequency of signal on sensing coil)
